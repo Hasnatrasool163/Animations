@@ -24,6 +24,16 @@ canvas.addEventListener('mousemove', (event) => {
     }
 });
 
+canvas.addEventListener('touchmove', (event) => {
+    const touch = event.touches[0];
+    mouse.x = touch.clientX;
+    mouse.y = touch.clientY;
+    for (let i = 0; i < 3; i++) {
+        particlesArray.push(new Particle());
+    }
+    event.preventDefault();
+});
+
 class Particle {
     constructor() {
         this.x = mouse.x;
@@ -55,7 +65,7 @@ function handleParticles() {
         for (let j = i; j < particlesArray.length; j++) {
             const dx = particlesArray[i].x - particlesArray[j].x;
             const dy = particlesArray[i].y - particlesArray[j].y;
-            const distance = Math.sqrt(dx * dy + dy * dy);
+            const distance = Math.sqrt(dx * dx + dy * dy);
             if (distance < 100) {
                 ctx.beginPath();
                 ctx.strokeStyle = particlesArray[i].color;
